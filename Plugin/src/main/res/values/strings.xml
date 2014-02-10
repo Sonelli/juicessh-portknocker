@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Port Knocker</string>
+
+    <string name="description">Description</string>
+    <string name="main_description">Port knocking allows you to only expose your SSH port if a certain set of TCP/UDP/ICMP packets are received.\n\nIt requires you to run a port knocking daemon on your server such as 'knockd'.\n\nFor more information please see:\nhttp://en.wikipedia.org/wiki/Port_knocking </string>
+
+
+
+</resources>
