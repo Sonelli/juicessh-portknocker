@@ -22,9 +22,9 @@ public class KnockItemTypeAdapter extends BaseAdapter implements SpinnerAdapter 
     public KnockItemTypeAdapter(Context context) {
 
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        types.add(KnockItem.TYPE_PAUSE, context.getString(R.string.pause));
         types.add(KnockItem.TYPE_TCP_PACKET, context.getString(R.string.tcp));
         types.add(KnockItem.TYPE_UDP_PACKET, context.getString(R.string.udp));
+        types.add(KnockItem.TYPE_PAUSE, context.getString(R.string.pause));
 
     }
 

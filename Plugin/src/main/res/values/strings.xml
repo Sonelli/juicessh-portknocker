@@ -16,11 +16,14 @@
     <string name="knock_sequence">Knock Sequence</string>
     <string name="destination">Destination</string>
     <string name="pick_a_connection">Pick a connection...</string>
-    <string name="pause">Pause (milliseconds)</string>
+    <string name="pause">Pause</string>
     <string name="tcp">TCP Packet</string>
     <string name="udp">UDP Packet</string>
     <string name="remove">Remove</string>
     <string name="duration">Duration</string>
     <string name="port">Port</string>
+    <string name="edit">Edit</string>
+    <string name="milliseconds">Milliseconds</string>
+    <string name="ms">ms</string>
 
 </resources>

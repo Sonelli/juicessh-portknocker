@@ -2,23 +2,23 @@ package com.sonelli.portknocker.models;
 
 public class KnockItem {
 
-    public static final int TYPE_PAUSE = 0;
-    public static final int TYPE_TCP_PACKET = 1;
-    public static final int TYPE_UDP_PACKET = 2;
+    public static final int TYPE_TCP_PACKET = 0;
+    public static final int TYPE_UDP_PACKET = 1;
+    public static final int TYPE_PAUSE = 2;
+
 
     private int type;
-    private int milliseconds;
-    private int port;
+    private int value;
 
     /**
      * Creates a new knock sequence item that pauses the sequence for a number of milliseconds
-     * @param milliseconds Length of time to pause
+     * @param milliseconds Length of time to pause in milliseconds
      * @return A pause KnockItem
      */
     public static KnockItem pause(int milliseconds){
         KnockItem item = new KnockItem();
         item.setType(TYPE_PAUSE);
-        item.setMilliseconds(milliseconds);
+        item.setValue(milliseconds);
         return item;
     }
 
@@ -30,7 +30,7 @@ public class KnockItem {
     public static KnockItem tcp(int port){
         KnockItem item = new KnockItem();
         item.setType(TYPE_TCP_PACKET);
-        item.setPort(port);
+        item.setValue(port);
         return item;
     }
 
@@ -42,7 +42,7 @@ public class KnockItem {
     public static KnockItem udp(int port){
         KnockItem item = new KnockItem();
         item.setType(TYPE_UDP_PACKET);
-        item.setPort(port);
+        item.setValue(port);
         return item;
     }
 
@@ -54,20 +54,12 @@ public class KnockItem {
         this.type = type;
     }
 
-    public int getMilliseconds() {
-        return milliseconds;
+    public int getValue() {
+        return value;
     }
 
-    public void setMilliseconds(int milliseconds) {
-        this.milliseconds = milliseconds;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
+    public void setValue(int value) {
+        this.value = value;
     }
 
 }

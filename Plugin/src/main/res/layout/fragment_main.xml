@@ -37,7 +37,7 @@
         <Spinner
             android:id="@+id/connection_spinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/spinner_height"
             android:prompt="@string/pick_a_connection"
             android:layout_marginTop="@dimen/activity_item_vertical_margin" />
 
@@ -52,8 +52,9 @@
             android:id="@+id/knock_item_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_item_vertical_margin"
-            android:layout_marginBottom="36dp"/>
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:layout_marginTop="@dimen/activity_item_vertical_margin" />
 
     </LinearLayout>
 

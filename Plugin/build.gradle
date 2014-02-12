@@ -22,9 +22,16 @@ repositories {
     maven { url 'https://raw.github.com/Sonelli/maven/master' }
 }
 
+
+
 dependencies {
     compile 'com.android.support:support-v4:19.0.0'
     compile 'com.android.support:appcompat-v7:19.0.0'
     compile 'com.sonelli:juicessh-pluginlibrary:1.0.+@aar'
+    compile 'com.google.code.gson:gson:2.2.+'
+    compile ("com.doomonafireball.betterpickers:library:1.5.2") {
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
+
     compile fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 }
