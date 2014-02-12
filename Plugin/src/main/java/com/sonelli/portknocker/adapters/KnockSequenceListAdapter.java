@@ -145,4 +145,8 @@ public class KnockSequenceListAdapter extends BaseAdapter implements ListAdapter
 
     }
 
+    public void updateSequence(KnockSequence sequence) {
+        this.sequence = sequence;
+        notifyDataSetChanged();
+    }
 }

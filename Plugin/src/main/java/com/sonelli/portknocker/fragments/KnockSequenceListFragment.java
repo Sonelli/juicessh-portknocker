@@ -18,6 +18,9 @@ import com.sonelli.portknocker.adapters.ConnectionSpinnerAdapter;
 import com.sonelli.portknocker.adapters.KnockSequenceListAdapter;
 import com.sonelli.portknocker.loaders.ConnectionListLoader;
 import com.sonelli.portknocker.models.KnockSequence;
+import com.sonelli.portknocker.models.LastUsedConnection;
+
+import java.util.UUID;
 
 public class KnockSequenceListFragment extends Fragment {
 
@@ -37,29 +40,11 @@ public class KnockSequenceListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_main, container, false);
 
-        this.sequence = KnockSequence.load(getActivity());
-
         this.connectionList = (Spinner) layout.findViewById(R.id.connection_spinner);
         this.connectionListAdapter = new ConnectionSpinnerAdapter(getActivity());
         connectionList.setAdapter(connectionListAdapter);
 
         this.knockItemList = (ListView) layout.findViewById(R.id.knock_item_list);
-        this.knockItemListAdapter = new KnockSequenceListAdapter(getActivity(), sequence);
-        knockItemList.setAdapter(knockItemListAdapter);
-
-        connectionList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                sequence.setConnection(connectionListAdapter.getConnectionId(position));
-                sequence.save(getActivity());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                sequence.setConnection(null);
-                sequence.save(getActivity());
-            }
-        });
 
         return layout;
     }
@@ -75,10 +60,43 @@ public class KnockSequenceListFragment extends Fragment {
             connectionListLoader.setOnLoadedListener(new ConnectionListLoader.OnLoadedListener() {
                 @Override
                 public void onLoaded() {
-                    int position = connectionListAdapter.getIndexOfConnection(sequence.getConnectionString());
-                    if(position > -1){
-                        connectionList.setSelection(position);
+
+                    UUID last = LastUsedConnection.get(getActivity());
+
+                    if(last != null){
+
+                        int position = connectionListAdapter.getIndexOfConnection(last.toString());
+
+                        if(position > -1){
+                            connectionList.setSelection(position);
+                            sequence = KnockSequence.load(getActivity(), connectionListAdapter.getConnectionId(position));
+                        } else {
+                            sequence = new KnockSequence();
+                        }
+
+                    } else {
+                        sequence = new KnockSequence();
                     }
+
+                    knockItemListAdapter = new KnockSequenceListAdapter(getActivity(), sequence);
+                    knockItemList.setAdapter(knockItemListAdapter);
+
+                    connectionList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            sequence = KnockSequence.load(getActivity(), connectionListAdapter.getConnectionId(position));
+                            sequence.setConnection(connectionListAdapter.getConnectionId(position));
+                            knockItemListAdapter.updateSequence(sequence);
+                            LastUsedConnection.set(getActivity(), connectionListAdapter.getConnectionId(position));
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            sequence.setConnection(null);
+                            sequence.save(getActivity());
+                        }
+                    });
+
                 }
             });
 

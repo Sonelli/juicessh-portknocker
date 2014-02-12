@@ -11,7 +11,6 @@ import java.util.UUID;
 public class KnockSequence {
 
     // Maybe we want to store more than just a single sequence in the future
-    public static final String DEFAULT_SEQUENCE = "sequence-0";
     public static final String PREFS_NAME = "sequences";
 
     private ArrayList<KnockItem> items = new ArrayList<KnockItem>();
@@ -23,17 +22,17 @@ public class KnockSequence {
 
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(DEFAULT_SEQUENCE, new Gson().toJson(this));
+        editor.putString(connection, new Gson().toJson(this));
         editor.commit();
 
     }
 
-    public static KnockSequence load(Context context){
-        if(context == null)
+    public static KnockSequence load(Context context, UUID id){
+        if(context == null || id == null)
             return new KnockSequence();
 
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        return new Gson().fromJson(prefs.getString(DEFAULT_SEQUENCE, "{}"), KnockSequence.class);
+        return new Gson().fromJson(prefs.getString(id.toString(), "{}"), KnockSequence.class);
     }
 
     public UUID getConnection() {

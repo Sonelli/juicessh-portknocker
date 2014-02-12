@@ -3,7 +3,6 @@ package com.sonelli.portknocker.adapters;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,11 +59,10 @@ public class ConnectionSpinnerAdapter extends CursorAdapter {
     public int getIndexOfConnection(String id){
 
         Cursor cursor = getCursor();
-        if(cursor != null){
+        if(id != null && cursor != null){
             while(cursor.moveToNext()){
                 int column = cursor.getColumnIndex(PluginContract.Connections.COLUMN_ID);
                 if(column > -1){
-                    Log.e(TAG, "Checking if " + id + " equals " + cursor.getString(column));
                     if(id.equals(cursor.getString(column))){
                         return cursor.getPosition();
                     }
