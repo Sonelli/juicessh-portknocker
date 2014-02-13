@@ -99,6 +99,7 @@ public class KnockSequenceListAdapter extends BaseAdapter implements ListAdapter
                     .setPlusMinusVisibility(View.INVISIBLE)
                     .setDecimalVisibility(View.INVISIBLE)
                     .setReference(position)
+                    .setMaxNumber(65535)
                     .addNumberPickerDialogHandler(new NumberPickerDialogFragment.NumberPickerDialogHandler() {
                         @Override
                         public void onDialogNumberSet(int reference, int number, double decimal, boolean negative, double fullNumber) {
