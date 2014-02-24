@@ -3,8 +3,6 @@ package com.sonelli.portknocker.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +10,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
-import com.doomonafireball.betterpickers.numberpicker.NumberPickerDialogFragment;
 import com.sonelli.portknocker.R;
 import com.sonelli.portknocker.adapters.ConnectionSpinnerAdapter;
 import com.sonelli.portknocker.adapters.KnockSequenceListAdapter;
@@ -61,7 +57,7 @@ public class KnockSequenceListFragment extends Fragment {
 
         // Use a Loader to load the connection list into the adapter from the JuiceSSH content provider
         // This keeps DB activity async and off the UI thread to prevent the plugin lagging
-        if(this.connectionListLoader == null){
+        if (this.connectionListLoader == null) {
             this.connectionListLoader = new ConnectionListLoader(getActivity(), connectionListAdapter);
             connectionListLoader.setOnLoadedListener(new ConnectionListLoader.OnLoadedListener() {
                 @Override
@@ -69,11 +65,11 @@ public class KnockSequenceListFragment extends Fragment {
 
                     UUID last = LastUsedConnection.get(getActivity());
 
-                    if(last != null){
+                    if (last != null) {
 
                         int position = connectionListAdapter.getIndexOfConnection(last.toString());
 
-                        if(position > -1){
+                        if (position > -1) {
                             connectionList.setSelection(position);
                             sequence = KnockSequence.load(getActivity(), connectionListAdapter.getConnectionId(position));
                         } else {
@@ -109,7 +105,7 @@ public class KnockSequenceListFragment extends Fragment {
                                         public void onFailure(String reason) {
 
                                             Activity activity = getActivity();
-                                            if(activity == null)
+                                            if (activity == null)
                                                 return;
 
                                             Toast.makeText(activity, reason, Toast.LENGTH_SHORT).show();

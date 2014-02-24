@@ -24,6 +24,7 @@ public class ConnectionListLoader implements LoaderManager.LoaderCallbacks<Curso
      * Creates a {@link android.support.v4.content.Loader} to fetch all connection
      * items from the database on a background thread (similar to an {@link android.os.AsyncTask}.
      * Once the connections are loaded it will populate the associated listview/spinner adapter.
+     *
      * @param context
      * @param adapter
      */
@@ -32,7 +33,7 @@ public class ConnectionListLoader implements LoaderManager.LoaderCallbacks<Curso
         this.adapter = adapter;
     }
 
-    public void setOnLoadedListener(OnLoadedListener listener){
+    public void setOnLoadedListener(OnLoadedListener listener) {
         this.listener = listener;
     }
 
@@ -52,14 +53,15 @@ public class ConnectionListLoader implements LoaderManager.LoaderCallbacks<Curso
     /**
      * Swaps out the associated adapter's cursor for a populated one
      * once the loader has fetched all of the connections from the DB
+     *
      * @param cursorLoader
      * @param cursor
      */
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        if(adapter != null){
+        if (adapter != null) {
             adapter.swapCursor(cursor);
-            if(listener != null){
+            if (listener != null) {
                 listener.onLoaded();
             }
         }
@@ -68,11 +70,12 @@ public class ConnectionListLoader implements LoaderManager.LoaderCallbacks<Curso
     /**
      * Flip back to the original state before connections were loaded
      * and set the associated adapter's cursor to null.
+     *
      * @param cursorLoader
      */
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
-        if(adapter != null){
+        if (adapter != null) {
             adapter.swapCursor(null);
         }
     }

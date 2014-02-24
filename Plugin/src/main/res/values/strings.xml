@@ -4,7 +4,7 @@
     <string name="app_name">Port Knocker</string>
 
     <string name="description">Description</string>
-    <string name="main_description">Port knocking allows you to only expose your SSH port if a certain set of TCP/UDP/ICMP packets are received.\n\nIt requires you to run a port knocking daemon on your server such as \'knockd\'.\n\nFor more information please see:\nhttp://en.wikipedia.org/wiki/Port_knocking </string>
+    <string name="main_description">Port knocking allows you to only expose your SSH port if a certain set of TCP or UDP packets are received.\n\nIt requires you to run a port knocking daemon on your server such as \'knockd\'.\n\nFor more information please see:\nhttp://en.wikipedia.org/wiki/Port_knocking </string>
     <string name="fork_me_on_github">Fork me on GitHub</string>
     <string name="rate_this_plugin">Rate this plugin</string>
     <string name="about">About</string>
@@ -15,7 +15,7 @@
     <string name="connect">Connect</string>
     <string name="knock_sequence">Knock Sequence</string>
     <string name="destination">Destination</string>
-    <string name="pick_a_connection">Pick a connection...</string>
+    <string name="pick_a_connection">Pick a connection…</string>
     <string name="pause">Pause</string>
     <string name="tcp">TCP Packet</string>
     <string name="udp">UDP Packet</string>

@@ -18,7 +18,6 @@ import com.sonelli.portknocker.models.KnockItem;
 import com.sonelli.portknocker.models.KnockSequence;
 
 import java.lang.ref.WeakReference;
-import java.util.UUID;
 
 public class KnockSequenceListAdapter extends BaseAdapter implements ListAdapter {
 
@@ -32,7 +31,7 @@ public class KnockSequenceListAdapter extends BaseAdapter implements ListAdapter
         this.inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void save(){
+    public void save() {
         sequence.save(activity.get());
         notifyDataSetChanged();
     }
@@ -44,7 +43,7 @@ public class KnockSequenceListAdapter extends BaseAdapter implements ListAdapter
 
     @Override
     public KnockItem getItem(int position) {
-        if(sequence.size() < (position + 1)){
+        if (sequence.size() < (position + 1)) {
             KnockItem item = new KnockItem();
             sequence.add(position, item);
             return item;
@@ -62,10 +61,10 @@ public class KnockSequenceListAdapter extends BaseAdapter implements ListAdapter
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         final FragmentActivity context = activity.get();
-        if(context == null)
+        if (context == null)
             return null;
 
-        if(convertView == null){
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.knock_item, parent, false);
         }
 
@@ -95,23 +94,23 @@ public class KnockSequenceListAdapter extends BaseAdapter implements ListAdapter
                 }
 
                 new NumberPickerBuilder()
-                    .setFragmentManager(context.getSupportFragmentManager())
-                    .setPlusMinusVisibility(View.INVISIBLE)
-                    .setDecimalVisibility(View.INVISIBLE)
-                    .setReference(position)
-                    .setMaxNumber(65535)
-                    .addNumberPickerDialogHandler(new NumberPickerDialogFragment.NumberPickerDialogHandler() {
-                        @Override
-                        public void onDialogNumberSet(int reference, int number, double decimal, boolean negative, double fullNumber) {
-                            KnockItem item = getItem(reference);
-                            item.setValue(number);
-                            item.setType((int) type.getSelectedItemId());
-                            save();
-                        }
-                    })
-                    .setLabelText(dialogLabel)
-                    .setStyleResId(R.style.BetterPickersDialogFragment_Light)
-                    .show();
+                        .setFragmentManager(context.getSupportFragmentManager())
+                        .setPlusMinusVisibility(View.INVISIBLE)
+                        .setDecimalVisibility(View.INVISIBLE)
+                        .setReference(position)
+                        .setMaxNumber(65535)
+                        .addNumberPickerDialogHandler(new NumberPickerDialogFragment.NumberPickerDialogHandler() {
+                            @Override
+                            public void onDialogNumberSet(int reference, int number, double decimal, boolean negative, double fullNumber) {
+                                KnockItem item = getItem(reference);
+                                item.setValue(number);
+                                item.setType((int) type.getSelectedItemId());
+                                save();
+                            }
+                        })
+                        .setLabelText(dialogLabel)
+                        .setStyleResId(R.style.BetterPickersDialogFragment_Light)
+                        .show();
             }
         });
 
@@ -123,7 +122,7 @@ public class KnockSequenceListAdapter extends BaseAdapter implements ListAdapter
             }
         });
 
-        if(position > sequence.size() -1){
+        if (position > sequence.size() - 1) {
 
             // This is the empty one, which allows users to add a new value
             removeButton.setEnabled(false);
@@ -136,7 +135,7 @@ public class KnockSequenceListAdapter extends BaseAdapter implements ListAdapter
             removeButton.setEnabled(true);
             KnockItem item = getItem(position);
             type.setSelection(item.getType());
-            if(item.getValue() > -1){
+            if (item.getValue() > -1) {
                 value.setText(String.valueOf(item.getValue()));
             }
 

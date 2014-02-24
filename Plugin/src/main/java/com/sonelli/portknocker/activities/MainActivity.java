@@ -39,7 +39,7 @@ public class MainActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
 
             case R.id.fork_on_github:
                 Intent urlIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.app_url)));
@@ -53,7 +53,7 @@ public class MainActivity extends ActionBarActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                 try {
                     startActivity(intent);
-                } catch (ActivityNotFoundException e){
+                } catch (ActivityNotFoundException e) {
                     Toast.makeText(this, getString(R.string.google_play_not_installed), Toast.LENGTH_SHORT).show();
                 }
                 return true;

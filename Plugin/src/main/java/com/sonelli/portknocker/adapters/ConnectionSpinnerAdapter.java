@@ -27,16 +27,18 @@ public class ConnectionSpinnerAdapter extends CursorAdapter {
 
     /**
      * Loads JuiceSSH connections ready for a ListView/Spinner
+     *
      * @param context
      * @param type
      */
-    public ConnectionSpinnerAdapter(Context context){
+    public ConnectionSpinnerAdapter(Context context) {
         super(context, null, false);
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     /**
      * Returns the UUID connection ID for the item at a given position, or null if not available
+     *
      * @param position
      * @return The UUID connection ID
      */
@@ -44,10 +46,10 @@ public class ConnectionSpinnerAdapter extends CursorAdapter {
 
         UUID id = null;
 
-        if(getCursor() != null){
+        if (getCursor() != null) {
             getCursor().moveToPosition(position);
             int idIndex = getCursor().getColumnIndex(PluginContract.Connections.COLUMN_ID);
-            if(idIndex > -1){
+            if (idIndex > -1) {
                 id = UUID.fromString(getCursor().getString(idIndex));
             }
         }
@@ -56,14 +58,14 @@ public class ConnectionSpinnerAdapter extends CursorAdapter {
 
     }
 
-    public int getIndexOfConnection(String id){
+    public int getIndexOfConnection(String id) {
 
         Cursor cursor = getCursor();
-        if(id != null && cursor != null){
-            while(cursor.moveToNext()){
+        if (id != null && cursor != null) {
+            while (cursor.moveToNext()) {
                 int column = cursor.getColumnIndex(PluginContract.Connections.COLUMN_ID);
-                if(column > -1){
-                    if(id.equals(cursor.getString(column))){
+                if (column > -1) {
+                    if (id.equals(cursor.getString(column))) {
                         return cursor.getPosition();
                     }
                 }
@@ -89,7 +91,7 @@ public class ConnectionSpinnerAdapter extends CursorAdapter {
 
         int nameColumn = cursor.getColumnIndex(PluginContract.Connections.COLUMN_NAME);
 
-        if(nameColumn > -1){
+        if (nameColumn > -1) {
 
             TextView textView = (TextView) view.findViewById(android.R.id.text1);
             String name = cursor.getString(nameColumn);

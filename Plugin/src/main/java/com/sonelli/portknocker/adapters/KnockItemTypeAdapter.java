@@ -1,7 +1,6 @@
 package com.sonelli.portknocker.adapters;
 
 import android.content.Context;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,11 +45,11 @@ public class KnockItemTypeAdapter extends BaseAdapter implements SpinnerAdapter 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        if(convertView == null){
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.knock_item_type, parent, false);
         }
 
-        if(convertView != null && convertView instanceof TextView){
+        if (convertView != null && convertView instanceof TextView) {
             ((TextView) convertView).setText(getItem(position));
         }
 
