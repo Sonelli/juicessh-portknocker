@@ -58,19 +58,34 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/button_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         style="?android:buttonBarStyle">
 
         <Button
-            android:id="@+id/connect_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/shortcut_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
             style="?android:buttonBarButtonStyle"
             android:textColor="@android:color/white"
             android:textStyle="bold"
+            android:ellipsize="end"
+            android:background="@drawable/solid_button"
+            android:text="@string/shortcut" />
+
+        <Button
+            android:id="@+id/connect_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            style="?android:buttonBarButtonStyle"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:ellipsize="end"
             android:background="@drawable/solid_button"
             android:text="@string/connect" />
 

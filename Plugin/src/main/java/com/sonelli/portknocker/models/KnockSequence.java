@@ -22,6 +22,8 @@ import java.util.UUID;
 
 public class KnockSequence {
 
+
+
     public static interface OnConnectListener {
         void onMessage(String message);
 
@@ -36,6 +38,7 @@ public class KnockSequence {
 
     private ArrayList<KnockItem> items = new ArrayList<KnockItem>();
     private UUID connection;
+    private String connectionName;
 
     public void save(Context context) {
         if (context == null || connection == null)
@@ -184,7 +187,7 @@ public class KnockSequence {
                                     // Start the connection in the foreground
                                     Intent intent = new Intent();
                                     intent.setAction(Intent.ACTION_VIEW);
-                                    intent.setData(Uri.parse("ssh://" + connection.toString()));
+                                    intent.setData(Uri.parse("ssh://" + copyConnection.toString()));
                                     activity.startActivity(intent);
 
                                 }
@@ -233,6 +236,12 @@ public class KnockSequence {
         }
     }
 
+    public String getConnectionString(){
+        synchronized (this) {
+            return connection.toString();
+        }
+    }
+
     public void add(int index, KnockItem item) {
         synchronized (this) {
             items.add(index, item);
@@ -255,6 +264,14 @@ public class KnockSequence {
         synchronized (this) {
             return items.size();
         }
+    }
+
+    public void setConnectionName(String connectionName) {
+        this.connectionName = connectionName;
+    }
+
+    public String getConnectionName() {
+        return connectionName;
     }
 
 }

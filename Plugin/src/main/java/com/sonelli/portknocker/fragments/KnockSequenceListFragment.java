@@ -1,6 +1,7 @@
 package com.sonelli.portknocker.fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.sonelli.portknocker.R;
+import com.sonelli.portknocker.activities.MainActivity;
 import com.sonelli.portknocker.adapters.ConnectionSpinnerAdapter;
 import com.sonelli.portknocker.adapters.KnockSequenceListAdapter;
 import com.sonelli.portknocker.loaders.ConnectionListLoader;
@@ -20,6 +22,7 @@ import com.sonelli.portknocker.models.KnockSequence;
 import com.sonelli.portknocker.models.LastUsedConnection;
 
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class KnockSequenceListFragment extends Fragment {
 
@@ -33,6 +36,7 @@ public class KnockSequenceListFragment extends Fragment {
     private ConnectionSpinnerAdapter connectionListAdapter;
 
     private Button connectButton;
+    private Button shortcutButton;
 
     public KnockSequenceListFragment() {
     }
@@ -47,6 +51,7 @@ public class KnockSequenceListFragment extends Fragment {
 
         this.knockItemList = (ListView) layout.findViewById(R.id.knock_item_list);
         this.connectButton = (Button) layout.findViewById(R.id.connect_button);
+        this.shortcutButton = (Button) layout.findViewById(R.id.shortcut_button);
 
         return layout;
     }
@@ -63,7 +68,26 @@ public class KnockSequenceListFragment extends Fragment {
                 @Override
                 public void onLoaded() {
 
-                    UUID last = LastUsedConnection.get(getActivity());
+                    UUID last = null;
+                    final AtomicBoolean startImmedately = new AtomicBoolean(false);
+
+                    if (getArguments() != null && getArguments().getString("id") != null) {
+                        // If we've been passed a specific ID to use, then this is a request
+                        // from a homescreen shortcut - initate the connection immediately
+                        try {
+                            last = UUID.fromString(getArguments().getString("id"));
+                            startImmedately.set(true);
+                        } catch (NullPointerException e) {
+                            Toast.makeText(getActivity(), getString(R.string.invalid_connection), Toast.LENGTH_SHORT).show();
+                        } catch (IllegalArgumentException e) {
+                            Toast.makeText(getActivity(), getString(R.string.invalid_connection), Toast.LENGTH_SHORT).show();
+                        }
+
+                    } else {
+                        // If we haven't been passed a specific ID, then just load
+                        // the last connection the user was looking at
+                        last = LastUsedConnection.get(getActivity());
+                    }
 
                     if (last != null) {
 
@@ -88,6 +112,7 @@ public class KnockSequenceListFragment extends Fragment {
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             sequence = KnockSequence.load(getActivity(), connectionListAdapter.getConnectionId(position));
                             sequence.setConnection(connectionListAdapter.getConnectionId(position));
+                            sequence.setConnectionName(connectionListAdapter.getConnectionName(position));
                             knockItemListAdapter.updateSequence(sequence);
                             LastUsedConnection.set(getActivity(), connectionListAdapter.getConnectionId(position));
                             connectButton.setOnClickListener(new View.OnClickListener() {
@@ -122,11 +147,42 @@ public class KnockSequenceListFragment extends Fragment {
                                     });
                                 }
                             });
+
+                            // If we've been passed a connection to start immediately, then do so.
+                            if(startImmedately.get()){
+                                getArguments().putString("id", null);
+                                startImmedately.set(false);
+                                connectButton.performClick();
+                            }
+
+                            shortcutButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    // The launch intent
+                                    Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+                                    intent.setAction(Intent.ACTION_MAIN);
+                                    intent.putExtra("id", sequence.getConnectionString());
+
+                                    // The homescreen shortcut intent
+                                    Intent shortcutIntent = new Intent();
+                                    Intent.ShortcutIconResource icon = Intent.ShortcutIconResource.fromContext(getActivity().getApplicationContext(), R.drawable.ic_launcher);
+                                    shortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, intent);
+                                    shortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, sequence.getConnectionName());
+                                    shortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, icon);
+                                    shortcutIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+                                    getActivity().getApplicationContext().sendBroadcast(shortcutIntent);
+                                    Toast.makeText(getActivity(), getString(R.string.homescreen_shortcut_created), Toast.LENGTH_SHORT).show();
+
+                                }
+                            });
+
                         }
 
                         @Override
                         public void onNothingSelected(AdapterView<?> parent) {
                         }
+
                     });
 
                 }
@@ -136,6 +192,7 @@ public class KnockSequenceListFragment extends Fragment {
         } else {
             getActivity().getSupportLoaderManager().restartLoader(0, null, connectionListLoader);
         }
+
 
     }
 }

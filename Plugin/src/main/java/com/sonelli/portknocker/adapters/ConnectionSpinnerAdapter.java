@@ -15,9 +15,7 @@ import java.util.UUID;
 
 /**
  * Loads JuiceSSH connections from a cursor and provides an adapter
- * that can be used in a ListView or Spinner. You can optionally pass
- * a {@link com.sonelli.juicessh.pluginlibrary.PluginContract.Connections.TYPE}
- * to the constructor to filter down the list to a specific connection type.
+ * that can be used in a ListView or Spinner.
  */
 public class ConnectionSpinnerAdapter extends CursorAdapter {
 
@@ -29,7 +27,6 @@ public class ConnectionSpinnerAdapter extends CursorAdapter {
      * Loads JuiceSSH connections ready for a ListView/Spinner
      *
      * @param context
-     * @param type
      */
     public ConnectionSpinnerAdapter(Context context) {
         super(context, null, false);
@@ -56,6 +53,27 @@ public class ConnectionSpinnerAdapter extends CursorAdapter {
 
         return id;
 
+    }
+
+    /**
+     * Returns the connection name for the item at a given position, or null if not available
+     *
+     * @param position
+     * @return The connection name
+     */
+    public String getConnectionName(int position) {
+
+        String name = null;
+
+        if (getCursor() != null) {
+            getCursor().moveToPosition(position);
+            int idIndex = getCursor().getColumnIndex(PluginContract.Connections.COLUMN_NAME);
+            if (idIndex > -1) {
+                name = getCursor().getString(idIndex);
+            }
+        }
+
+        return name;
     }
 
     public int getIndexOfConnection(String id) {
@@ -100,5 +118,6 @@ public class ConnectionSpinnerAdapter extends CursorAdapter {
         }
 
     }
+
 
 }
