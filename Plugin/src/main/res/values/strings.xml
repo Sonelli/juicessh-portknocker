@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Port Knocker</string>
-
+    <string name="app_about">This JuiceSSH plugin plugin is open source and freely available on Github. If you\'d like to contribute to it\'s development, please take a look at the github page and submit a pull request.\n\nhttps://github.com/sonelli/juicessh-portknocker</string>
     <string name="description">Description</string>
     <string name="main_description">Port knocking allows you to only expose your SSH port if a certain set of TCP or UDP packets are received.\n\nIt requires you to run a port knocking daemon on your server such as \'knockd\'.\n\nFor more information please see:\nhttp://en.wikipedia.org/wiki/Port_knocking </string>
     <string name="fork_me_on_github">Fork me on GitHub</string>
@@ -28,5 +28,6 @@
     <string name="shortcut">Shortcut</string>
     <string name="homescreen_shortcut_created">Homescreen shortcut created</string>
     <string name="invalid_connection">Invalid connection</string>
+    <string name="title_activity_about">About</string>
 
 </resources>

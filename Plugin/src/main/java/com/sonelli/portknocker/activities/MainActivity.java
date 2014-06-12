@@ -61,6 +61,8 @@ public class MainActivity extends ActionBarActivity {
                 return true;
 
             case R.id.about:
+                Intent aboutIntent = new Intent(this, AboutActivity.class);
+                startActivity(aboutIntent);
                 return true;
 
         }
