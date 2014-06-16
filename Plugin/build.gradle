@@ -7,7 +7,7 @@ repositories {
 dependencies {
     compile 'com.android.support:support-v4:19.1.0'
     compile 'com.android.support:appcompat-v7:19.1.0'
-    compile 'com.sonelli:juicessh-pluginlibrary:1.0.6@aar'
+    compile 'com.sonelli:juicessh-pluginlibrary:1.0.7@aar'
     compile 'com.google.code.gson:gson:2.2.+'
     compile 'com.doomonafireball.betterpickers:library:1.5.2'
 }
