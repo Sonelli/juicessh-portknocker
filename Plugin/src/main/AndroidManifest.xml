@@ -5,6 +5,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
 
+    <uses-permission android:name="com.sonelli.juicessh.api.v1.permission.READ_CONNECTIONS"/>
+    <uses-permission android:name="com.sonelli.juicessh.api.v1.permission.OPEN_SESSIONS" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
