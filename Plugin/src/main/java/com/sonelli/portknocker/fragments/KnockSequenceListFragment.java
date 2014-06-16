@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,7 @@ public class KnockSequenceListFragment extends Fragment {
         // Use a Loader to load the connection list into the adapter from the JuiceSSH content provider
         // This keeps DB activity async and off the UI thread to prevent the plugin lagging
         if (this.connectionListLoader == null) {
+
             this.connectionListLoader = new ConnectionListLoader(getActivity(), connectionListAdapter);
             connectionListLoader.setOnLoadedListener(new ConnectionListLoader.OnLoadedListener() {
                 @Override
@@ -90,18 +92,20 @@ public class KnockSequenceListFragment extends Fragment {
                     }
 
                     if (last != null) {
-
                         int position = connectionListAdapter.getIndexOfConnection(last.toString());
-
-                        if (position > -1) {
+                        if(position > -1) {
+                            // Load up the last connection the user had open
                             connectionList.setSelection(position);
                             sequence = KnockSequence.load(getActivity(), connectionListAdapter.getConnectionId(position));
                         } else {
+                            // Tried to load a non-existant connection
                             sequence = new KnockSequence();
+                            connectionList.setSelection(0);
                         }
-
                     } else {
+                        // We don't know the last connection - set the selection to the first item
                         sequence = new KnockSequence();
+                        connectionList.setSelection(0);
                     }
 
                     knockItemListAdapter = new KnockSequenceListAdapter(getActivity(), sequence);
@@ -110,6 +114,7 @@ public class KnockSequenceListFragment extends Fragment {
                     connectionList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                             sequence = KnockSequence.load(getActivity(), connectionListAdapter.getConnectionId(position));
                             sequence.setConnection(connectionListAdapter.getConnectionId(position));
                             sequence.setConnectionName(connectionListAdapter.getConnectionName(position));
@@ -192,7 +197,6 @@ public class KnockSequenceListFragment extends Fragment {
         } else {
             getActivity().getSupportLoaderManager().restartLoader(0, null, connectionListLoader);
         }
-
 
     }
 }
