@@ -110,6 +110,11 @@ public class KnockSequenceListFragment extends Fragment {
                     knockItemListAdapter = new KnockSequenceListAdapter(getActivity(), sequence);
                     knockItemList.setAdapter(knockItemListAdapter);
 
+                    if(sequence.getConnection() == null){
+                        sequence.setConnection(connectionListAdapter.getConnectionId(connectionList.getSelectedItemPosition()));
+                        sequence.setConnectionName(connectionListAdapter.getConnectionName(connectionList.getSelectedItemPosition()));
+                    }
+
                     connectionList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

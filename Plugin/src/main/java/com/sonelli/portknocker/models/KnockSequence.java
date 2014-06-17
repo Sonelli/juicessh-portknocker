@@ -22,8 +22,6 @@ import java.util.UUID;
 
 public class KnockSequence {
 
-
-
     public static interface OnConnectListener {
         void onMessage(String message);
 
@@ -86,7 +84,7 @@ public class KnockSequence {
                 }
 
                 // Look up the connection address
-                String host = getAddressForConnection(activity, connection.toString());
+                String host = getAddressForConnection(activity);
                 if (host == null) {
                     if (listener != null) {
                         handler.post(new Runnable() {
@@ -204,7 +202,7 @@ public class KnockSequence {
 
     }
 
-    private String getAddressForConnection(Activity activity, String id) {
+    private String getAddressForConnection(Activity activity) {
 
         if (connection == null)
             return null;
@@ -272,6 +270,10 @@ public class KnockSequence {
 
     public String getConnectionName() {
         return connectionName;
+    }
+
+    public UUID getConnection() {
+        return connection;
     }
 
 }
