@@ -1,0 +1,6 @@
+v1.0.1 (17th June 2014)
+ - Fixed NPE when creating a homescreen shortcut for an empty port knock sequence
+
+v1.0.0 (16th June 2014)
+ - Initial release
+
