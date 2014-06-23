@@ -3,7 +3,6 @@ package com.sonelli.portknocker.adapters;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,7 @@ public class ConnectionSpinnerAdapter extends CursorAdapter {
     /**
      * Loads JuiceSSH connections ready for a ListView/Spinner
      *
-     * @param context
+     * @param context Context used to inflate layout
      */
     public ConnectionSpinnerAdapter(Context context) {
         super(context, null, false);
@@ -37,18 +36,19 @@ public class ConnectionSpinnerAdapter extends CursorAdapter {
     /**
      * Returns the UUID connection ID for the item at a given position, or null if not available
      *
-     * @param position
-     * @return The UUID connection ID
+     * @param position Position of the item to get the ID of
+     * @return The UUID connection ID or null if there is no connection at that position
      */
     public UUID getConnectionId(int position) {
 
         UUID id = null;
 
         if (getCursor() != null) {
-            getCursor().moveToPosition(position);
-            int idIndex = getCursor().getColumnIndex(PluginContract.Connections.COLUMN_ID);
-            if (idIndex > -1) {
-                id = UUID.fromString(getCursor().getString(idIndex));
+            if(getCursor().moveToPosition(position)) {
+                int idIndex = getCursor().getColumnIndex(PluginContract.Connections.COLUMN_ID);
+                if (idIndex > -1) {
+                    id = UUID.fromString(getCursor().getString(idIndex));
+                }
             }
         }
 
@@ -59,7 +59,7 @@ public class ConnectionSpinnerAdapter extends CursorAdapter {
     /**
      * Returns the connection name for the item at a given position, or null if not available
      *
-     * @param position
+     * @param position Position of the item to get the name of
      * @return The connection name
      */
     public String getConnectionName(int position) {
@@ -67,16 +67,23 @@ public class ConnectionSpinnerAdapter extends CursorAdapter {
         String name = null;
 
         if (getCursor() != null) {
-            getCursor().moveToPosition(position);
-            int idIndex = getCursor().getColumnIndex(PluginContract.Connections.COLUMN_NAME);
-            if (idIndex > -1) {
-                name = getCursor().getString(idIndex);
+            if(getCursor().moveToPosition(position)) {
+                int idIndex = getCursor().getColumnIndex(PluginContract.Connections.COLUMN_NAME);
+                if (idIndex > -1) {
+                    name = getCursor().getString(idIndex);
+                }
             }
         }
 
         return name;
     }
 
+    /**
+     * Returns the index of the connections' position in the adapter list
+     *
+     * @param id The ID of the connection to look for
+     * @return The position index, or -1 if it doesn't exist
+     */
     public int getIndexOfConnection(String id) {
 
         Cursor cursor = getCursor();
